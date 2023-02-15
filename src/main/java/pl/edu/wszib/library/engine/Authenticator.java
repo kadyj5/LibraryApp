@@ -28,6 +28,10 @@ public class Authenticator {
         return loggedUser;
     }
 
+    public void getUserLoggedOut() {
+        loggedUser = null;
+    }
+
     public String getSeed() {
         return seed;
     }

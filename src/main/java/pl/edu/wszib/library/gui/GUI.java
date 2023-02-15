@@ -3,6 +3,7 @@ package pl.edu.wszib.library.gui;
 import org.apache.commons.codec.digest.DigestUtils;
 import pl.edu.wszib.library.database.UserDAO;
 import pl.edu.wszib.library.engine.Authenticator;
+import pl.edu.wszib.library.entity.Book;
 import pl.edu.wszib.library.entity.User;
 
 import java.util.Scanner;
@@ -28,9 +29,24 @@ public class GUI {
                 3. Show all books
                 4. Show borrowed books
                 5. Show borrowed books with the exceeded date of return
+                6. Add book
+                7. Log out
                 """);
-        return scanner.nextLine().trim();
+        return this.scanner.nextLine().trim();
     }
+    public Book readNewBook() {
+        Book book = new Book();
+        System.out.println("New Title:");
+        book.setTitle(scanner.nextLine().trim());
+        System.out.println("Author:");
+        book.setAuthor(scanner.nextLine().trim());
+        System.out.println("ISBN:");
+        book.setIsbn(Integer.parseInt(scanner.nextLine().trim()));
+        return book;
+    }
+
+
+    // user methods
     public User readLoginAndPassword() {
         User user = new User();
         user.setLogin(readLogin());
