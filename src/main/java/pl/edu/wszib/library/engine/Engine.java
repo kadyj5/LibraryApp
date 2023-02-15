@@ -45,10 +45,16 @@ public class Engine {
             while (isLogged) {
                 switch (gui.showUserMenu()) {
                     case "1":
+                        System.out.println("=".repeat(20));
+                        bookDAO.searchForBook(gui.getInfoOfBook());
                         break;
                     case "2":
+                        System.out.println("=".repeat(20));
+                        gui.borrowBook();
                         break;
                     case "3":
+                        System.out.println("=".repeat(20));
+                        bookDAO.showBooks();
                         break;
                     case "4":
                         break;

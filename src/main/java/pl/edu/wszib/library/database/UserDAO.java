@@ -26,7 +26,6 @@ public class UserDAO {
         try {
             String sql = "INSERT INTO tuser (login, password, role, name, surname) VALUES (?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
-
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getRole().toString());

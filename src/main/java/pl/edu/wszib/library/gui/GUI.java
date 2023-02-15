@@ -1,6 +1,7 @@
 package pl.edu.wszib.library.gui;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import pl.edu.wszib.library.database.BookDAO;
 import pl.edu.wszib.library.database.UserDAO;
 import pl.edu.wszib.library.engine.Authenticator;
 import pl.edu.wszib.library.entity.Book;
@@ -12,6 +13,7 @@ public class GUI {
     private static final GUI instance = new GUI();
     private final Scanner scanner = new Scanner(System.in);
     private final UserDAO userDAO = UserDAO.getInstance();
+    private final BookDAO bookDAO = BookDAO.getInstance();
     private final Authenticator authenticator = Authenticator.getInstance();
 
     public String showMenu() {
@@ -44,7 +46,20 @@ public class GUI {
         book.setIsbn(scanner.nextLine().trim());
         return book;
     }
+    public String getInfoOfBook(){
+        System.out.print("Search: ");
+        return scanner.nextLine().trim();
+    }
+    public void borrowBook() {
+        System.out.println("Search for the book you are interested in");
+        bookDAO.searchForBook(getInfoOfBook());
+        if (bookDAO.borrowBookById(readId())) {
+            System.out.println("Enjoy reading!");
+        } else {
+            System.out.println("Sorry this book is borrowed by someone else");
+        }
 
+    }
 
     // user methods
     public User readLoginAndPassword() {
@@ -53,13 +68,17 @@ public class GUI {
         user.setPassword(readPassword());
         return user;
     }
+    public int readId() {
+        System.out.print("ID: ");
+        return Integer.parseInt(scanner.nextLine().trim());
+    }
     public String readLogin() {
-        System.out.println("Login:");
+        System.out.print("Login: ");
         return this.scanner.nextLine().trim();
     }
 
     public String readPassword() {
-        System.out.println("Password:");
+        System.out.print("Password: ");
         return this.scanner.nextLine().trim();
     }
 
