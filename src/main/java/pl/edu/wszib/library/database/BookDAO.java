@@ -31,7 +31,7 @@ public class BookDAO {
 
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());
-            ps.setInt(3,book.getIsbn());
+            ps.setString(3,book.getIsbn());
             ps.executeUpdate();
 
         } catch (SQLException e) {

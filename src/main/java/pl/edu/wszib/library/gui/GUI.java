@@ -41,7 +41,7 @@ public class GUI {
         System.out.println("Author:");
         book.setAuthor(scanner.nextLine().trim());
         System.out.println("ISBN:");
-        book.setIsbn(Integer.parseInt(scanner.nextLine().trim()));
+        book.setIsbn(scanner.nextLine().trim());
         return book;
     }
 
@@ -87,7 +87,6 @@ public class GUI {
         String surname = readSurname();
         return new User(1, login, password, User.Role.USER, name,surname);
     }
-
 
     public static GUI getInstance(){
         return instance;
