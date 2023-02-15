@@ -1,10 +1,12 @@
-package pl.edu.wszib.engine;
+package pl.edu.wszib.library.engine;
 
-import pl.edu.wszib.gui.GUI;
+import pl.edu.wszib.library.database.UserDAO;
+import pl.edu.wszib.library.gui.GUI;
 
 public class Engine {
     final GUI gui = GUI.getInstance();
     private static final Engine instance = new Engine();
+    private final UserDAO userDAO = UserDAO.getInstance();
 
     public void start(){
         boolean isRunning = true;
@@ -13,6 +15,8 @@ public class Engine {
             switch (gui.showMenu()) {
                 case "1":
                     System.out.println("Registration process...");
+                    userDAO.userAdd(gui.readNewUser());
+                    System.out.println("Your account is ready.");
                     break;
                 case "2":
                     System.out.println("Welcome again!");
