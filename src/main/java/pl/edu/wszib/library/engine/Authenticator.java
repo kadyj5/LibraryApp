@@ -24,6 +24,10 @@ public class Authenticator {
         }
     }
 
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
     public String getSeed() {
         return seed;
     }

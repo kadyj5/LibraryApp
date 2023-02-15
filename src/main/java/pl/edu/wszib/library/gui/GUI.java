@@ -21,13 +21,29 @@ public class GUI {
         return this.scanner.nextLine().trim();
     }
 
+    public String showUserMenu() {
+        System.out.println("""
+                1. Find book
+                2. Borrow book
+                3. Show all books
+                4. Show borrowed books
+                5. Show borrowed books with the exceeded date of return
+                """);
+        return scanner.nextLine().trim();
+    }
+    public User readLoginAndPassword() {
+        User user = new User();
+        user.setLogin(readLogin());
+        user.setPassword(readPassword());
+        return user;
+    }
     public String readLogin() {
-        System.out.println("Choose login:");
+        System.out.println("Login:");
         return this.scanner.nextLine().trim();
     }
 
     public String readPassword() {
-        System.out.println("Choose password:");
+        System.out.println("Password:");
         return this.scanner.nextLine().trim();
     }
 

@@ -38,7 +38,6 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-
     public User findByLogin(String login) {
         try {
             String sql = "SELECT * FROM tuser WHERE login = ?";
