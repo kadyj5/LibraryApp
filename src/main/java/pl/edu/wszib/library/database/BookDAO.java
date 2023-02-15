@@ -3,7 +3,6 @@ package pl.edu.wszib.library.database;
 import pl.edu.wszib.library.entity.Book;
 
 import java.sql.*;
-import java.util.Optional;
 
 public class BookDAO {
 
@@ -39,27 +38,34 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
-    public boolean borrowBookById(int id) {
+    public boolean searchForBookByID(int id) {
         try {
             String sql = "SELECT * FROM tbook WHERE id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next() && Boolean.parseBoolean(rs.getString("avaliable"))) {
-                ps.clearParameters();
-                sql = "UPDATE tbook SET avaliable = ? WHERE id = ?";
-                ps = connection.prepareStatement(sql);
+            rs.next();
+            return Boolean.parseBoolean(rs.getString("avaliable"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean borrowBookById(int id) {
+        if(searchForBookByID(id)){
+            try {
+                String sql = "UPDATE tbook SET avaliable = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, "false");
                 ps.setInt(2, id);
                 ps.executeUpdate();
                 return true;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return false;
     }
-    public void searchForBook(String userInput){
+    public void searchForSpecificBook(String userInput){
         try {
             String sql = "SELECT * FROM tbook WHERE title LIKE ? OR author LIKE ? OR isbn LIKE ?";
             PreparedStatement ps = connection.prepareStatement(sql);

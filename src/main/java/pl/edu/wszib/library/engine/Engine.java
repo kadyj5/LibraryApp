@@ -46,11 +46,12 @@ public class Engine {
                 switch (gui.showUserMenu()) {
                     case "1":
                         System.out.println("=".repeat(20));
-                        bookDAO.searchForBook(gui.getInfoOfBook());
+                        bookDAO.searchForSpecificBook(gui.getInfoOfBook());
                         break;
                     case "2":
                         System.out.println("=".repeat(20));
-                        gui.borrowBook();
+                        gui.borrowBook(bookDAO.borrowBookById(gui.readId()));
+
                         break;
                     case "3":
                         System.out.println("=".repeat(20));

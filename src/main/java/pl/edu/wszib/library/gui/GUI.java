@@ -50,10 +50,8 @@ public class GUI {
         System.out.print("Search: ");
         return scanner.nextLine().trim();
     }
-    public void borrowBook() {
-        System.out.println("Search for the book you are interested in");
-        bookDAO.searchForBook(getInfoOfBook());
-        if (bookDAO.borrowBookById(readId())) {
+    public void borrowBook(boolean avaliable) {
+        if (avaliable) {
             System.out.println("Enjoy reading!");
         } else {
             System.out.println("Sorry this book is borrowed by someone else");
