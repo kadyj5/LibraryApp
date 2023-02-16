@@ -102,7 +102,7 @@ public class GUI {
         String password = DigestUtils.md5Hex(readPassword() + authenticator.getSeed());
         String name = readName();
         String surname = readSurname();
-        return new User(1, login, password, User.Role.USER, name,surname);
+        return new User(login, password, User.Role.USER, name,surname);
     }
 
     public static GUI getInstance(){

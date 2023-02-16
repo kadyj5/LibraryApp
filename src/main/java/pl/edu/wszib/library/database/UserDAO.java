@@ -25,13 +25,17 @@ public class UserDAO {
     public void userAdd(User user) {
         try {
             String sql = "INSERT INTO tuser (login, password, role, name, surname) VALUES (?,?,?,?,?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getRole().toString());
             ps.setString(4, user.getName());
             ps.setString(5, user.getSurname());
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            user.setId(rs.getInt(1));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

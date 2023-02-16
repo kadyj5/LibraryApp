@@ -32,19 +32,19 @@ public class Book {
     }
 
     public String getTitle() {
-        return title;
+        return title.toUpperCase();
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.toUpperCase();
     }
 
     public String getAuthor() {
-        return author;
+        return author.toUpperCase();
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+        this.author = author.toUpperCase();
     }
 
     public String getIsbn() {

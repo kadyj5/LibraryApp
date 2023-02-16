@@ -11,6 +11,14 @@ public class User {
     public User() {
     }
 
+    public User(String login, String password, Role role, String name, String surname) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.name = name;
+        this.surname = surname;
+    }
+
     public User(int id, String login, String password, Role role, String name, String surname) {
         this.id = id;
         this.login = login;
@@ -27,6 +35,11 @@ public class User {
 
 
     // gettery & settery
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

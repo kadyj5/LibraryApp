@@ -19,7 +19,6 @@ public class Engine {
             switch (gui.showMenu()) {
                 case "1":
                     System.out.println("=".repeat(20));
-                    System.out.println("Registration process...");
                     userDAO.userAdd(gui.readNewUser());
                     System.out.println("Your account is ready.");
                     break;
@@ -50,16 +49,17 @@ public class Engine {
                         break;
                     case "2":
                         System.out.println("=".repeat(20));
-                        gui.borrowBook(bookDAO.borrowBookById(gui.readId()));
-
+                        gui.borrowBook(bookDAO.borrowBookById(gui.readId(), authenticator.getLoggedUser()));
                         break;
                     case "3":
                         System.out.println("=".repeat(20));
                         bookDAO.showBooks();
                         break;
                     case "4":
+                        bookDAO.showBorrowedBooks();
                         break;
                     case "5":
+                        bookDAO.showBorrowedOutOfDate();
                         break;
                     case "6":
                         System.out.println("=".repeat(20));
