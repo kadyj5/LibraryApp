@@ -180,7 +180,6 @@ public class BookDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static BookDAO getInstance() {
