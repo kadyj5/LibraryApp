@@ -21,6 +21,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     private void showBook(ResultSet rs) {
         try {
             System.out.print(new Book(
@@ -33,6 +34,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     private void showBorrowedBook(ResultSet rs) {
         try {
             showBook(rs);
@@ -46,6 +48,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void showAllBooks() {
         try {
             String sql = "SELECT * FROM tbook";
@@ -74,12 +77,13 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void showAllBorrowedBooks() {
         try {
             String sql = "SELECT b.id,b.title,b.author,b.isbn,b.available,d.user_name,d.user_surname,d.date_of_borrow,d.date_of_return" +
                     " FROM tbook AS b" +
                     " JOIN borrowedbookdetails AS d ON d.book_id = b.id";
-            PreparedStatement ps = connection.prepareStatement(sql);;
+            PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 showBorrowedBook(rs);
@@ -89,6 +93,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void showAllBorrowedOutOfDate(){
         try {
             String sql = "SELECT b.id,b.title,b.author,b.isbn,b.available,d.user_name,d.user_surname,d.date_of_borrow,d.date_of_return" +
@@ -106,6 +111,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void findSpecificBook(String userInput){
         try {
             String sql = "SELECT * FROM tbook WHERE title LIKE ? OR author LIKE ? OR isbn LIKE ?";
@@ -122,6 +128,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     public boolean searchForBookByID(int id) {
         try {
             String sql = "SELECT * FROM tbook WHERE id = ?";
@@ -134,6 +141,7 @@ public class BookDAO {
             throw new RuntimeException(e);
         }
     }
+
     public boolean borrowBookById(int id, User user) {
         if(searchForBookByID(id)){
             try {
@@ -174,6 +182,7 @@ public class BookDAO {
         }
 
     }
+
     public static BookDAO getInstance() {
         return instance;
     }

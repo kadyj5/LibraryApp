@@ -26,8 +26,8 @@ public class Book {
         return available;
     }
 
-    public void setAvailable(boolean avaliable) {
-        this.available = avaliable;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public String getTitle() {

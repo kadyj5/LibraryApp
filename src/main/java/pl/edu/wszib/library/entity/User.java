@@ -8,8 +8,7 @@ public class User {
     private String name;
     private String surname;
 
-    public User() {
-    }
+    public User() {}
 
     public User(String login, String password, Role role, String name, String surname) {
         this.login = login;
@@ -32,9 +31,6 @@ public class User {
         USER,
         ADMIN
     }
-
-
-    // gettery & settery
 
     public void setId(int id) {
         this.id = id;

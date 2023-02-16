@@ -13,6 +13,7 @@ public class Authenticator {
     private static final Authenticator instance = new Authenticator();
 
     private Authenticator(){}
+
     public void authenticate(User user) {
         Optional<User> userBox = Optional.ofNullable(this.userDAO.findByLogin(user.getLogin()));
         if(userBox.isPresent()) {

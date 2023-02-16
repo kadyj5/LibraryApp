@@ -4,7 +4,6 @@ import pl.edu.wszib.library.entity.User;
 
 import java.sql.*;
 
-// data access object
 public class UserDAO {
 
     private final Connection connection;
