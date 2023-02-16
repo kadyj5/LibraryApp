@@ -21,6 +21,7 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
     public void userAdd(User user) {
         try {
             String sql = "INSERT INTO tuser (login, password, role, name, surname) VALUES (?,?,?,?,?)";
@@ -40,6 +41,7 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
     public User findByLogin(String login) {
         try {
             String sql = "SELECT * FROM tuser WHERE login = ?";

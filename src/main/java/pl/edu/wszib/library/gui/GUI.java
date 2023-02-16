@@ -9,6 +9,7 @@ import pl.edu.wszib.library.entity.User;
 import java.util.Scanner;
 
 public class GUI {
+    
     private static final GUI instance = new GUI();
     private final Scanner scanner = new Scanner(System.in);
     private final UserDAO userDAO = UserDAO.getInstance();
@@ -34,6 +35,7 @@ public class GUI {
                 """);
         return this.scanner.nextLine().trim();
     }
+
     public Book readNewBook() {
         Book book = new Book();
         System.out.println("New Title:");
@@ -44,28 +46,32 @@ public class GUI {
         book.setIsbn(scanner.nextLine().trim());
         return book;
     }
+
     public String getInfoOfBook(){
         System.out.print("Search: ");
         return scanner.nextLine().trim();
     }
+
     public void borrowBook(boolean available) {
         if (available) {
             System.out.println("Enjoy reading!");
         } else {
             System.out.println("Sorry this book is borrowed by someone else");
         }
-
     }
+
     public User readLoginAndPassword() {
         User user = new User();
         user.setLogin(readLogin());
         user.setPassword(readPassword());
         return user;
     }
+
     public int readId() {
         System.out.print("ID: ");
         return Integer.parseInt(scanner.nextLine().trim());
     }
+
     public String readLogin() {
         System.out.print("Login: ");
         return this.scanner.nextLine().trim();

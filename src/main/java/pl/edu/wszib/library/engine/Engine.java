@@ -5,6 +5,7 @@ import pl.edu.wszib.library.database.UserDAO;
 import pl.edu.wszib.library.gui.GUI;
 
 public class Engine {
+
     final GUI gui = GUI.getInstance();
     final UserDAO userDAO = UserDAO.getInstance();
     final BookDAO bookDAO = BookDAO.getInstance();

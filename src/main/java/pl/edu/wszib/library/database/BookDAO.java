@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class BookDAO {
+
     private final Connection connection;
     private static final BookDAO instance = new BookDAO();
 
