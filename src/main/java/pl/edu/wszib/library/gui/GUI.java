@@ -58,8 +58,6 @@ public class GUI {
         }
 
     }
-
-    // user methods
     public User readLoginAndPassword() {
         User user = new User();
         user.setLogin(readLogin());
@@ -91,7 +89,7 @@ public class GUI {
     }
 
     public User readNewUser() {
-        String login = "";
+        String login;
         do {
             login = readLogin();
             if (userDAO.findByLogin(login) != null) {

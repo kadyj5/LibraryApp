@@ -10,6 +10,7 @@ public class Engine {
     final BookDAO bookDAO = BookDAO.getInstance();
     final Authenticator authenticator = Authenticator.getInstance();
     private static final Engine instance = new Engine();
+    private final String displayDivider = "=".repeat(25);
 
     public void start(){
         boolean isRunning = true;
@@ -18,12 +19,12 @@ public class Engine {
         while (isRunning){
             switch (gui.showMenu()) {
                 case "1":
-                    System.out.println("=".repeat(20));
+                    System.out.println(displayDivider);
                     userDAO.userAdd(gui.readNewUser());
                     System.out.println("Your account is ready.");
                     break;
                 case "2":
-                    System.out.println("=".repeat(20));
+                    System.out.println(displayDivider);
                     System.out.println("Logging...");
                     this.authenticator.authenticate(this.gui.readLoginAndPassword());
                     isLogged = this.authenticator.getLoggedUser() != null;
@@ -32,6 +33,7 @@ public class Engine {
                     }
                     break;
                 case "3":
+                    System.out.println(displayDivider);
                     System.out.println("=".repeat(20));
                     isRunning = false;
                     System.out.println("Exit from application");
@@ -44,36 +46,38 @@ public class Engine {
             while (isLogged) {
                 switch (gui.showUserMenu()) {
                     case "1":
-                        System.out.println("=".repeat(20));
-                        bookDAO.searchForSpecificBook(gui.getInfoOfBook());
+                        System.out.println(displayDivider);
+                        bookDAO.findSpecificBook(gui.getInfoOfBook());
                         break;
                     case "2":
-                        System.out.println("=".repeat(20));
+                        System.out.println(displayDivider);
                         gui.borrowBook(bookDAO.borrowBookById(gui.readId(), authenticator.getLoggedUser()));
                         break;
                     case "3":
-                        System.out.println("=".repeat(20));
-                        bookDAO.showBooks();
+                        System.out.println(displayDivider);
+                        bookDAO.showAllBooks();
                         break;
                     case "4":
-                        bookDAO.showBorrowedBooks();
+                        System.out.println(displayDivider);
+                        bookDAO.showAllBorrowedBooks();
                         break;
                     case "5":
-                        bookDAO.showBorrowedOutOfDate();
+                        System.out.println(displayDivider);
+                        bookDAO.showAllBorrowedOutOfDate();
                         break;
                     case "6":
-                        System.out.println("=".repeat(20));
+                        System.out.println(displayDivider);
                         System.out.println("Adding new position");
                         bookDAO.addBook(gui.readNewBook());
                         break;
                     case "7":
-                        System.out.println("=".repeat(20));
+                        System.out.println(displayDivider);
                         System.out.println("Logged out\n");
                         isLogged = false;
                         this.authenticator.getUserLoggedOut();
                         break;
                     default:
-                        System.out.println("=".repeat(20));
+                        System.out.println(displayDivider);
                         System.out.println("Wrong choice!");
                         break;
                 }

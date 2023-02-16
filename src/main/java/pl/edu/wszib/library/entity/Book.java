@@ -6,29 +6,28 @@ public class Book {
     private String title;
     private String author;
     private String isbn;
-    private boolean avaliable;
+    private boolean available;
 
-    public Book() {
-    }
+    public Book() {}
 
-    public Book(int id, String title, String author, String isbn, boolean avaliable) {
+    public Book(int id, String title, String author, String isbn, boolean available) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.avaliable = avaliable;
+        this.available = available;
     }
 
     public int getId() {
         return id;
     }
 
-    public boolean isAvaliable() {
-        return avaliable;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setAvaliable(boolean avaliable) {
-        this.avaliable = avaliable;
+    public void setAvailable(boolean avaliable) {
+        this.available = avaliable;
     }
 
     public String getTitle() {
@@ -68,8 +67,8 @@ public class Book {
                 .append(author)
                 .append("\tisbn: ")
                 .append(isbn)
-                .append("\tavaliable: ")
-                .append(avaliable)
+                .append("\tavailable: ")
+                .append(available)
                 .toString();
     }
 }
