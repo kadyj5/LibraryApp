@@ -4,7 +4,6 @@ import pl.edu.wszib.library.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -28,20 +27,21 @@ public class UserDAO {
     }
     public boolean changeRole(String login) {
         try {
-            User user = (User) findByLogin(login).get();
-            if(user.getRole() == User.Role.USER){
-                String sql = "UPDATE tuser SET role = ? WHERE login = ?";
-                PreparedStatement ps = this.connection.prepareStatement(sql);
-                ps.setString(1, String.valueOf(User.Role.ADMIN));
-                ps.setString(2, login);
-                ps.executeUpdate();
-                return true;
-            } else {
-                return false;
+            if (findByLogin(login).isPresent()) {
+                User user = (User) findByLogin(login).get();
+                if(user.getRole() == User.Role.USER){
+                    String sql = "UPDATE tuser SET role = ? WHERE login = ?";
+                    PreparedStatement ps = this.connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(User.Role.ADMIN));
+                    ps.setString(2, login);
+                    ps.executeUpdate();
+                    return true;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
     public void userAdd(User user) {
         try {
@@ -63,8 +63,6 @@ public class UserDAO {
         }
     }
     public void listUsers() {
-//        List<User> users = new ArrayList<>(getUsersFromDB().size());
-//        Collections.copy(users,getUsersFromDB());
         for(User user : getUsersFromDB()) {
             System.out.println(user);
         }
@@ -74,11 +72,9 @@ public class UserDAO {
 
     public Optional findByLogin(String login) {
         Stream<User> userStream = getUsersFromDB().stream();
-        Optional<User> optionalUser = userStream.filter(user -> user.getLogin()
+        return userStream.filter(user -> user.getLogin()
                 .equals(login))
                 .findFirst();
-        if (optionalUser.isPresent()) return optionalUser;
-        else return Optional.empty();
     }
 
     private List<User> getUsersFromDB() {

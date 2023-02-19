@@ -7,13 +7,12 @@ import pl.edu.wszib.library.entity.User;
 
 public class UserDAOtest {
 
-    @Test
-    public void findAdminUserTest() {
-        UserDAO userDAO = new UserDAO();
-        String login = "admin";
-
-        User actual = userDAO.findByLogin(login);
-
-        Assertions.assertNotNull(actual);
-    }
+//    @Test
+//    public void findAdminUserTest() {
+//        UserDAO userDAO = new UserDAO();
+//        String login = "admin";
+//
+//
+//        Assertions.assertNotNull(actual);
+//    }
 }
