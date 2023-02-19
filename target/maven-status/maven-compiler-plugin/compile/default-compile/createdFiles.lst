@@ -1,0 +1,10 @@
+pl\edu\wszib\library\entity\Book.class
+pl\edu\wszib\library\entity\User$Role.class
+pl\edu\wszib\library\Main.class
+pl\edu\wszib\library\engine\Authenticator.class
+pl\edu\wszib\library\database\BookDAO.class
+pl\edu\wszib\library\database\UserDAO.class
+pl\edu\wszib\library\entity\User.class
+pl\edu\wszib\library\HashGenerator.class
+pl\edu\wszib\library\engine\Engine.class
+pl\edu\wszib\library\gui\GUI.class

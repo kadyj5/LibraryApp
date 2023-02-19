@@ -6,10 +6,11 @@ import pl.edu.wszib.library.engine.Authenticator;
 import pl.edu.wszib.library.entity.Book;
 import pl.edu.wszib.library.entity.User;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class GUI {
-    
+
     private static final GUI instance = new GUI();
     private final Scanner scanner = new Scanner(System.in);
     private final UserDAO userDAO = UserDAO.getInstance();
@@ -23,18 +24,35 @@ public class GUI {
         return this.scanner.nextLine().trim();
     }
 
-    public String showUserMenu() {
-        System.out.println("""
+    public String showUserMenu(User user) {
+        System.out.print("""
                 1. Find book
                 2. Borrow book
                 3. Show all books
-                4. Show borrowed books
-                5. Show borrowed books with the exceeded date of return
-                6. Add book
-                7. Log out
+                4. Log out
                 """);
+        if(user.getRole() == User.Role.ADMIN) {
+            System.out.print("""
+                    5. Show borrowed books
+                    6. Show borrowed books with the exceeded date of return
+                    7. Add book
+                    8. Change User ROLE
+                    9. Add User
+                    10. List all users
+                    """);
+        }
+        System.out.println();
         return this.scanner.nextLine().trim();
     }
+    public void showRoleChangeResult(boolean result){
+        System.out.println("Changing user role:");
+        if(result){
+            System.out.println("User upgraded to ADMIN or already an ADMIN");
+        } else {
+            System.out.println("No such user");
+        }
+    }
+
 
     public Book readNewBook() {
         Book book = new Book();
@@ -96,10 +114,10 @@ public class GUI {
         String login;
         do {
             login = readLogin();
-            if (userDAO.findByLogin(login) != null) {
+            if (userDAO.findByLogin(login) != Optional.empty()) {
                 System.out.println("This login is already used");
             }
-        } while (userDAO.findByLogin(login) != null);
+        } while (userDAO.findByLogin(login) != Optional.empty());
         System.out.println("This login has not been used");
         String password = DigestUtils.md5Hex(readPassword() + authenticator.getSeed());
         String name = readName();

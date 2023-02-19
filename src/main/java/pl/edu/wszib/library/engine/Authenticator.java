@@ -16,7 +16,7 @@ public class Authenticator {
     private Authenticator(){}
 
     public void authenticate(User user) {
-        Optional<User> userBox = Optional.ofNullable(this.userDAO.findByLogin(user.getLogin()));
+        Optional<User> userBox = this.userDAO.findByLogin(user.getLogin());
         if(userBox.isPresent()) {
             User userFromDB = userBox.get();
             if(userFromDB.getPassword().equals(

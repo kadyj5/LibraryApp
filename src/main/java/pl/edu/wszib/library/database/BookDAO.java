@@ -31,20 +31,20 @@ public class BookDAO {
                     rs.getString("author"),
                     rs.getString("isbn"),
                     Boolean.parseBoolean(rs.getString("available"))));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void showBorrowedBook(ResultSet rs) {
-        try {
-            showBook(rs);
-            System.out.printf("\tuser_name: %s\t user_surname: %s\t" +
-                            "date_of_borrow: %s\t date_of_return: %s",
-                    rs.getString("user_name"),
-                    rs.getString("user_surname"),
-                    rs.getDate("date_of_borrow"),
-                    rs.getDate("date_of_return"));
+            if (rs.getString("available").equals("false")) {
+                String sql2 = "SELECT * FROM borrowedbookdetails WHERE book_id = ?";
+                PreparedStatement ps2 = this.connection.prepareStatement(sql2);
+                ps2.setInt(1, rs.getInt("id"));
+                ResultSet rs2 = ps2.executeQuery();
+                rs2.next();
+                System.out.printf("\tuser_name: %s\t user_surname: %s\t" +
+                                "date_of_borrow: %s\t date_of_return: %s",
+                        rs2.getString("user_name"),
+                        rs2.getString("user_surname"),
+                        rs2.getDate("date_of_borrow"),
+                        rs2.getDate("date_of_return"));
+            }
+            System.out.println();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,26 +53,10 @@ public class BookDAO {
     public void showAllBooks() {
         try {
             String sql = "SELECT * FROM tbook";
-            String sql2 = "SELECT b.id,b.title,b.author,b.isbn,b.available," +
-                    "d.user_name,d.user_surname,d.date_of_borrow,d.date_of_return" +
-                    " FROM tbook AS b" +
-                    " JOIN borrowedbookdetails AS d ON d.book_id = b.id";
             PreparedStatement ps = connection.prepareStatement(sql);
-            PreparedStatement ps2 = connection.prepareStatement(sql2);
-            ResultSet rs2 = ps2.executeQuery();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                switch (rs.getString("available")) {
-                    case "true":
-                        showBook(rs);
-                        System.out.println();
-                        break;
-                    case "false":
-                        rs2.next();
-                        showBorrowedBook(rs2);
-                        System.out.println();
-                        break;
-                }
+                showBook(rs);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -81,13 +65,11 @@ public class BookDAO {
 
     public void showAllBorrowedBooks() {
         try {
-            String sql = "SELECT b.id,b.title,b.author,b.isbn,b.available,d.user_name,d.user_surname,d.date_of_borrow,d.date_of_return" +
-                    " FROM tbook AS b" +
-                    " JOIN borrowedbookdetails AS d ON d.book_id = b.id";
+            String sql = "SELECT * FROM tbook WHERE available = \"false\"";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                showBorrowedBook(rs);
+                showBook(rs);
                 System.out.println();
             }
         } catch (SQLException e) {
@@ -105,7 +87,7 @@ public class BookDAO {
             ps.setDate(1, Date.valueOf(LocalDate.now()));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                showBorrowedBook(rs);
+                showBook(rs);
                 System.out.println();
             }
         } catch (SQLException e) {
@@ -171,7 +153,7 @@ public class BookDAO {
 
     public void addBook(Book book) {
         try {
-            String sql = "INSERT INTO tbook (title, author, isbn, avaliable) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO tbook (title, author, isbn, available) VALUES (?,?,?,?)";
             PreparedStatement ps = this.connection.prepareStatement(sql);
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());

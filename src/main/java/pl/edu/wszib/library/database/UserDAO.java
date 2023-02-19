@@ -3,6 +3,11 @@ package pl.edu.wszib.library.database;
 import pl.edu.wszib.library.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class UserDAO {
 
@@ -21,7 +26,23 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-
+    public boolean changeRole(String login) {
+        try {
+            User user = (User) findByLogin(login).get();
+            if(user.getRole() == User.Role.USER){
+                String sql = "UPDATE tuser SET role = ? WHERE login = ?";
+                PreparedStatement ps = this.connection.prepareStatement(sql);
+                ps.setString(1, String.valueOf(User.Role.ADMIN));
+                ps.setString(2, login);
+                ps.executeUpdate();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void userAdd(User user) {
         try {
             String sql = "INSERT INTO tuser (login, password, role, name, surname) VALUES (?,?,?,?,?)";
@@ -41,27 +62,44 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+    public void listUsers() {
+//        List<User> users = new ArrayList<>(getUsersFromDB().size());
+//        Collections.copy(users,getUsersFromDB());
+        for(User user : getUsersFromDB()) {
+            System.out.println(user);
+        }
 
-    public User findByLogin(String login) {
+
+    }
+
+    public Optional findByLogin(String login) {
+        Stream<User> userStream = getUsersFromDB().stream();
+        Optional<User> optionalUser = userStream.filter(user -> user.getLogin()
+                .equals(login))
+                .findFirst();
+        if (optionalUser.isPresent()) return optionalUser;
+        else return Optional.empty();
+    }
+
+    private List<User> getUsersFromDB() {
         try {
-            String sql = "SELECT * FROM tuser WHERE login = ?";
-            PreparedStatement ps = this.connection.prepareStatement(sql);
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM tuser";
+        PreparedStatement ps = this.connection.prepareStatement(sql);
+        ResultSet resultSet = ps.executeQuery();
 
-            ps.setString(1, login);
-            ResultSet resultSet = ps.executeQuery();
-            if(resultSet.next()) {
-                return new User(
-                        resultSet.getInt("id"),
+            while (resultSet.next()) {
+                users.add(new User (resultSet.getInt("id"),
                         resultSet.getString("login"),
                         resultSet.getString("password"),
                         User.Role.valueOf(resultSet.getString("role")),
                         resultSet.getString("name"),
-                        resultSet.getString("surname"));
+                        resultSet.getString("surname")));
             }
+            return users;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     public static UserDAO getInstance(){
