@@ -6,6 +6,6 @@ import pl.edu.wszib.library.engine.Authenticator;
 public class HashGenerator {
     private static final Authenticator a = Authenticator.getInstance();
     public static void main(String[] args) {
-        System.out.println(DigestUtils.md5Hex("admin" + a.getSeed()));
+        System.out.println(DigestUtils.md5Hex("gimo" + a.getSeed()));
     }
 }

@@ -66,8 +66,6 @@ public class UserDAO {
         for(User user : getUsersFromDB()) {
             System.out.println(user);
         }
-
-
     }
 
     public Optional findByLogin(String login) {
