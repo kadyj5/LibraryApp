@@ -1,1 +1,3 @@
-pl\edu\wszib\library\UserDAOtest.class
+pl\edu\wszib\library\database\BookDAOTest.class
+pl\edu\wszib\library\database\UserDAOTest.class
+pl\edu\wszib\library\engine\AuthenticatorTest.class

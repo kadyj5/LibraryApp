@@ -112,21 +112,27 @@ public class BookDAO {
         }
     }
 
-    public boolean searchForBookByID(int id) {
+    private Book checkBookAvailability(int id) {
         try {
             String sql = "SELECT * FROM tbook WHERE id = ?";
             PreparedStatement ps = this.connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            return Boolean.parseBoolean(rs.getString("available"));
+            if (rs.next()) {
+                return new Book(rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("isbn"),
+                        rs.getBoolean("available"));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public boolean borrowBookById(int id, User user) {
-        if(searchForBookByID(id)){
+        if(checkBookAvailability(id) != null && checkBookAvailability(id).isAvailable()){
             try {
                 String sql = "UPDATE tbook SET available = ? WHERE id = ?";
                 PreparedStatement ps = this.connection.prepareStatement(sql);

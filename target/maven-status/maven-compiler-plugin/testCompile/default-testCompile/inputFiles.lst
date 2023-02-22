@@ -1,1 +1,3 @@
-C:\Users\Karolina\Documents\Java\myProjects\LibraryApp\src\test\java\pl\edu\wszib\library\UserDAOtest.java
+C:\Users\Karolina\Documents\Java\myProjects\LibraryApp\src\test\java\pl\edu\wszib\library\database\UserDAOTest.java
+C:\Users\Karolina\Documents\Java\myProjects\LibraryApp\src\test\java\pl\edu\wszib\library\database\BookDAOTest.java
+C:\Users\Karolina\Documents\Java\myProjects\LibraryApp\src\test\java\pl\edu\wszib\library\engine\AuthenticatorTest.java

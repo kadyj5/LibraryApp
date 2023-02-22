@@ -47,7 +47,7 @@ public class GUI {
     public void showRoleChangeResult(boolean result){
         System.out.println("Changing user role:");
         if(result){
-            System.out.println("User upgraded to ADMIN or already an ADMIN");
+            System.out.println("User upgraded to ADMIN");
         } else {
             System.out.println("No such user");
         }
